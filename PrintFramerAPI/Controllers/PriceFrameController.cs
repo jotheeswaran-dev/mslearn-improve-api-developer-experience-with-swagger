@@ -10,7 +10,15 @@ namespace PrintFramerAPI.Controllers
     [ApiController]
     public class PriceFrameController : ControllerBase
     {
+        /// <summary>
+        /// Returns the price of a frame based on its dimensions.
+        /// </summary>
+        /// <param name="Height">The height of the frame.</param>
+        /// <param name="Width">The width of the frame.</param>
+        /// <returns>The price, in dollars, of the picture frame.</returns>
+        /// <remarks> The API returns 'not valid' if the total length of frame material needed (the perimeter of the frame) is less than 20 inches and greater than 1000 inches.</remarks>
         [HttpGet("{Height}/{Width}")]
+        [Produces("text/plain")]
         public string GetPrice(string Height, string Width)
         {
             string result;
@@ -18,12 +26,12 @@ namespace PrintFramerAPI.Controllers
             return $"The cost of a {Height}x{Width} frame is ${result}";
         }
 
-        private string CalculatePrice(double height,double width)
+        private string CalculatePrice(double height, double width)
         {
             double perimeter;
-            perimeter = (2*height) + (2*width);
+            perimeter = (2 * height) + (2 * width);
 
-            if ((perimeter > 20.00 ) &&  (perimeter <= 50.00))
+            if ((perimeter > 20.00) && (perimeter <= 50.00))
             {
                 return "20.00";
             }
@@ -35,7 +43,7 @@ namespace PrintFramerAPI.Controllers
             {
                 return "100.00";
             }
-            return  "not valid";
+            return "not valid";
         }
     }
 }
